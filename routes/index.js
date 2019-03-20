@@ -8,7 +8,10 @@ const { catchErrors } = require('../handlers/errorHandlers')
 // Do work here
 router.get('/', catchErrors(storeController.getStores))
 router.get('/stores', catchErrors(storeController.getStores))
-router.get('/add', storeController.addStore)
+router.get('/add', 
+  authController.isLoggedIn,
+  storeController.addStore
+)
 router.post('/add', 
   storeController.upload,
   catchErrors(storeController.resize),
@@ -24,11 +27,13 @@ router.get('/stores/:slug', catchErrors(storeController.getStoreBySlug))
 router.get('/tags', catchErrors(storeController.getStoresByTag))
 router.get('/tags/:tag', catchErrors(storeController.getStoresByTag))
 router.get('/login', userController.loginForm)
+router.post('/login', authController.login)
 router.get('/register', userController.registerForm)
 router.post('/register', 
   userController.validateRegister,
   catchErrors(userController.registerUser),
   authController.login
 )
+router.get('/logout', authController.logout)
 
 module.exports = router
