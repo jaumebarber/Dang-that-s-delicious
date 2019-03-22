@@ -37,6 +37,15 @@ router.post('/register',
 router.get('/logout', authController.logout)
 router.get('/account', authController.isLoggedIn, userController.showAccount)
 router.post('/account', catchErrors(userController.updateAccount))
+router.get('/account/forgot', authController.renderForgot)
+router.post('/account/forgot', catchErrors(authController.forgot))
+router.get('/account/reset/:token', catchErrors(authController.reset))
+router.post('/account/reset/:token', 
+  authController.confirm,
+  catchErrors(authController.update)
+)
+
+
 
 
 module.exports = router

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+
+  .inner
+    h2= title
+    form.form(action="/account/forgot" method="POST")
+      h2 I forgot my password
+      label(for="email") Email
+      input(type="email" name="email")
+      input.button(type="submit" value="Reset my password")
