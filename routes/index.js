@@ -44,6 +44,7 @@ router.post('/account/reset/:token',
   authController.confirm,
   catchErrors(authController.update)
 )
+router.get('/api/search', catchErrors(storeController.searchStores) )
 
 
 
