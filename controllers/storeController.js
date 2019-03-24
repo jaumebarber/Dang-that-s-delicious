@@ -37,7 +37,7 @@ exports.homePage = (req, res) => {
 
 exports.getStoreBySlug = async (req, res, next) => {
   const store = await Store.findOne({ slug: req.params.slug })
-    .populate(author)
+    .populate('author')
   if (!store) return next()
   res.render('singleStore', { title: store.name, store })
 }
@@ -66,6 +66,7 @@ const confirmOwner = (store, user) => {
 
 exports.editStore = async (req, res) => {
   const store = await Store.findOne({ _id: req.params.id })
+  confirmOwner(store, req.user)
   res.render('editStore', { title: `Edit ${store.name}`, store })
 }
 
