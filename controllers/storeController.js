@@ -37,6 +37,7 @@ exports.homePage = (req, res) => {
 
 exports.getStoreBySlug = async (req, res, next) => {
   const store = await Store.findOne({ slug: req.params.slug })
+    .populate(author)
   if (!store) return next()
   res.render('singleStore', { title: store.name, store })
 }
@@ -46,6 +47,7 @@ exports.addStore = (req, res) => {
 }
 
 exports.createStore = async (req, res) => {
+  req.body.author = req.user._id
   const store = await (new Store(req.body)).save()
   req.flash('success', `Successfully Created ${store.name}. Care to leave a review?`)
   res.redirect(`/store/${store.slug}`)
