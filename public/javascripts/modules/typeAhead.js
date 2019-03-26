@@ -35,16 +35,20 @@ function typeAhead (search) {
     const activeClass = 'search__result--active'
     const current = search.querySelector(`.${activeClass}`)
     const items = search.querySelectorAll('.search__result')
+    const up =  e.keyCode === 38
+    const down = e.keyCode === 40
+    const enter = e.keyCode === 13
     let next
-    if (e.keyCode === 40 && current) {
+    
+    if (down && current) {
       next = current.nextElementSibling || items[0]
-    } else if (e.keyCode === 40) {
+    } else if (down) {
       next = items[0]
-    } else if (e.keyCode === 38 && current) {
+    } else if (up && current) {
       next = current.previousElementSibling || items[items.length - 1]
-    } else if (e.keyCode === 38) {
+    } else if (up) {
       next = items[items.length - 1]
-    } else if (e.keyCode === 13 && current.href) {
+    } else if (enter && current.href) {
       window.location = current.href
       return
     }
